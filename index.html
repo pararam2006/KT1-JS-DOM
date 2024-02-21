@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КТ1 JS DOM</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 0 auto;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        td.orange {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <table id="randomTable">
+        <!-- Генерация таблицы-->
+    </table>
+
+    <button class="button" onclick="addRandomNumber()">Добавить число</button>
+
+    <script>
+        let numbersArray = [];
+
+        // Генерация чисел
+        for (let i = 0; i < 30; i++) {
+            numbersArray.push(Math.floor(Math.random() * 100));
+        }
+
+        generateTable();
+
+        function generateTable() {
+            let table = document.getElementById('randomTable');
+
+            for (let i = 0; i < 6; i++) {
+                let row = table.insertRow();
+
+                for (let j = 0; j < 5; j++) {
+                    let cell = row.insertCell();
+                    let randomNumber = numbersArray[i * 5 + j];
+                    cell.innerText = randomNumber;
+
+                    if (randomNumber >= 50) {
+                        cell.classList.add('orange');
+                    }
+                }
+            }
+        }
+
+        function addRandomNumber() {
+            let randomNumber = Math.floor(Math.random() * 100);
+            numbersArray.push(randomNumber);
+
+            let table = document.getElementById('randomTable');
+            let rowIndex = Math.floor(numbersArray.length / 6);
+            let cellIndex = numbersArray.length % 6 - 1;
+
+            if (cellIndex === -1) {
+                rowIndex -= 1;
+                cellIndex = 5;
+            }
+            
+            let row = table.rows[rowIndex];
+            let cell = row.insertCell(cellIndex);
+            cell.innerText = randomNumber;
+
+            //Выделение оранжевым
+            if (randomNumber >= 50) {
+                cell.classList.add('orange');
+            }
+        }
+    </script>
+</body>
+</html>
